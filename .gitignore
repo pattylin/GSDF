@@ -9,3 +9,4 @@ id
 *.m~
 *.mat
 .DS_Store
+*.swap
