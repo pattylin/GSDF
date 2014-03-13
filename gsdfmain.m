@@ -20,7 +20,8 @@ clear;
 isdebug = 1;
 is_overwrite = 0;
 % --- add natalie plotting-- 
-isfigure = 0;
+isfigure = 0; % show the figure while running.. can run it independently by
+			  % function plot_CSplot_4oneEVT
 % -------------------------
 
 eventmatpath = './eventmat/';
@@ -115,7 +116,7 @@ for ie = 1:length(matfiles)
 	disp(['Calculating the auto-correlation of each station'])
 	for ista = 1:length(event.stadata)
 		if event.stadata(ista).isgood > 0
-			autocor = CS_measure(event,ista,ista,parameters);
+			[autocor,autocorrplot] = CS_measure(event,ista,ista,parameters);
 			if sum(autocor.amp) == 0
 				disp(['Station: ',event.stadata(ista).stnm,' doesn''t have enough data for this event!']);
 				event.stadata(ista).isgood = ErrorCode.sta_lackdata;
@@ -146,11 +147,9 @@ for ie = 1:length(matfiles)
 				if mod(csnum,100) == 0
 					disp(csnum);
 				end
-				%-- Gingle version --
-                %CS(csnum) = CS_measure(event,ista,nbsta,parameters);
-                % -- natalie plotting version ---
+
 				[CS(csnum),CSplot(csnum)] = CS_measure(event,ista,nbsta,parameters);
-                % ---end ------------------------
+
 			end % end of nbsta > ista
 		end % end of nearby station loop
 	end % end of station loop
@@ -201,6 +200,7 @@ for ie = 1:length(matfiles)
 		for ics = 1:length(CS)
 			ddist(ics) = CS(ics).ddist;
 			dtp(ics) = CS(ics).dtp(ip);
+            dtg(ics) = CS(ics).dtg(ip);
 			isgood(ics) = CS(ics).isgood(ip);
 		end % end of ics
 		goodind = find(isgood > 0);
@@ -225,6 +225,8 @@ for ie = 1:length(matfiles)
 		goodind = find(isgood > 0);
 		para = polyfit(ddist(goodind),dtp(goodind),1);
 		avgphv(ip) = 1./para(1);
+		para2 = polyfit(ddist(goodind),dtg(goodind),1);
+        avggrv(ip) = 1./para2(1);
 	end % end of periods
 
 	% create eventcs structure and output
@@ -233,6 +235,7 @@ for ie = 1:length(matfiles)
 	eventcs.autocor = event.autocor;
 	eventcs.id = event.id;
 	eventcs.avgphv = avgphv;
+	eventcs.avggrv = avggrv;
 	eventcs.stlas = stlas;
 	eventcs.stlos = stlos;
 	eventcs.stnms = stnms;

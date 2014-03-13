@@ -1,4 +1,6 @@
-function plot_CSplot_4one(event,CS,CSplot)
+%function plot_CSplot_4one(event,CS,CSplot)
+load ./CSmeasure/201112110147_cs_BHT.mat
+load ./eventmat/201112110147_BHT.mat
 
 % Function to plot representative figure for CSmeasure script. CSplot is
 % an arry that contains most of the information used to plot the figure
@@ -18,22 +20,22 @@ if ~exist('periods','var')
     lolim = parameters.lolim;
 end
 
-sta1 = CS.sta1;
-sta2 = CS.sta2;
+sta1 = eventcs.CS.sta1;
+sta2 = eventcs.CS.sta2;
 sta1_stnm = event.stadata(sta1).stnm;
 dist1 = event.stadata(sta1).dist;
 sta2_stnm = event.stadata(sta2).stnm;
 dist2 = event.stadata(sta2).dist;
 
 % Get information from CSplot array
-data1 = CSplot.data1;
-win_data2 = CSplot.win_data;
-taxis1 = CSplot.taxis1;
-taxis2 = CSplot.taxis2;
-nband_win_xcors = CSplot.nband_win_xcors;
-lag = CSplot.lag;
-xcor = CSplot.xcor;
-win_xcor = CSplot.win_xcor;
+data1 = eventcs.CSplot.data1;
+win_data2 = eventcs.CSplot.win_data;
+taxis1 = eventcs.CSplot.taxis1;
+taxis2 = eventcs.CSplot.taxis2;
+nband_win_xcors = eventcs.CSplot.nband_win_xcors;
+lag = eventcs.CSplot.lag;
+xcor = eventcs.CSplot.xcor;
+win_xcor = eventcs.CSplot.win_xcor;
 
 %% Plot a Map of Station Locations
 rayx = [event.stadata(sta1).stla;event.stadata(sta2).stla];
@@ -71,7 +73,7 @@ contourf(xi,yi,norm_nbands);
 hold on
 xlim([-3*max(periods) 3*max(periods)]);
 
-goodind = find(CS.isgood == 1);
+goodind = find(eventcs.CS.isgood == 1);
 for ig = 1:length(goodind)
     plot(300,periods(goodind(ig)),'rp','markersize',15,'markerfacecolor',RED)
     %text(-250,periods(goodind(ig)),'Good','color',ORANGE,'fontweight','bold');
@@ -97,4 +99,4 @@ if issaved ==1
     FIG46_id = [event.id,'_',sta1_stnm,'_',sta2_stnm,'.jpg'];
     print(f46,'-djpeg',FIG46_id);
 end
-end
+%end
