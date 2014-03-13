@@ -1,4 +1,4 @@
-function plot_CSfig(event,CS,CSplot)
+function plot_CSplot_4one(event,CS,CSplot)
 
 % Function to plot representative figure for CSmeasure script. CSplot is
 % an arry that contains most of the information used to plot the figure

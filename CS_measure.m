@@ -1,9 +1,27 @@
-function CS = CS_measure(event,sta1,sta2,parameters)
+function [CS,CSplot] = CS_measure(event,sta1,sta2,parameters)
 % Main function to perform GSDF measurement
 %
 	setup_ErrorCode;
 	isdebug = 0;
-    isfigure = 0;
+    isfigure = 0; %always turn off. since Natalie has new plotting scheme.
+
+
+% -- add natalie plotting --
+% Pretty colors!
+ORANGE=[255 69 0]./255;
+BLUE=[44/255 77/255 143/255];
+RED=[231/255 47/255 39/255];
+GREEN=[19/255 166/255 50/255];
+
+lalim=parameters.lalim;
+lolim=parameters.lolim;
+
+% -- end add ----------------
+
+
+
+
+
 
 	refv = parameters.refv;
 	refphv = parameters.refphv;
@@ -22,8 +40,12 @@ function CS = CS_measure(event,sta1,sta2,parameters)
 			xcor_win_iter = [zeros(1,length(periods) - length(xcor_win_iter)),xcor_win_iter];
 		end
 	end
+%  -- Gingle version ---------------------------
+%	CS = init_CSstruct;
+%  -- Natalie plotting version ---
+[CS,CSplot] = init_CSstruct;
+%  -- end changing -----------------------------
 
-	CS = init_CSstruct;
 	v1 = event.winpara(1); t1=event.winpara(2); v2=event.winpara(3); t2=event.winpara(4);
 
 	CS.sta1 = sta1;
@@ -202,5 +224,25 @@ function CS = CS_measure(event,sta1,sta2,parameters)
 		[temp besti] = min(abs(testdtp - syndtp));
 		CS.dtp(ip) = testdtp(besti);
 	end
+
+
+% --- add natalie plotting version -----
+%% Set up some useful parameters for plotting
+CSplot.data1 = data1;
+CSplot.win_data = win_data2;
+CSplot.taxis1 = taxis1;
+CSplot.taxis2 = taxis2;
+CSplot.nband_win_xcors = nband_win_xcors;
+CSplot.lag = lag;
+CSplot.xcor = xcor;
+CSplot.win_xcor = win_xcor;
+% --- end add --------------------------
+
+
+
+
+
+
+
 
 end % end of function

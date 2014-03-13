@@ -19,6 +19,9 @@ clear;
 
 isdebug = 1;
 is_overwrite = 0;
+% --- add natalie plotting-- 
+isfigure = 0;
+% -------------------------
 
 eventmatpath = './eventmat/';
 CSoutputpath = './CSmeasure/';
@@ -143,7 +146,11 @@ for ie = 1:length(matfiles)
 				if mod(csnum,100) == 0
 					disp(csnum);
 				end
-				CS(csnum) = CS_measure(event,ista,nbsta,parameters);
+				%-- Gingle version --
+                %CS(csnum) = CS_measure(event,ista,nbsta,parameters);
+                % -- natalie plotting version ---
+				[CS(csnum),CSplot(csnum)] = CS_measure(event,ista,nbsta,parameters);
+                % ---end ------------------------
 			end % end of nbsta > ista
 		end % end of nearby station loop
 	end % end of station loop
@@ -204,6 +211,16 @@ for ie = 1:length(matfiles)
 				CS(ics).isgood(ip) = ErrorCode.high_tp_err;
 			end
 			isgood(ics) = CS(ics).isgood(ip);
+			% --- add natalie plotting version ----
+            if isfigure
+                if ics == 1
+                    disp('Beginning to plot CS figures');
+                end
+                plot_CSfig(event,CS(ics),CSplot(ics))
+            end
+            % --- end add ------------------------
+
+
 		end
 		goodind = find(isgood > 0);
 		para = polyfit(ddist(goodind),dtp(goodind),1);
@@ -212,6 +229,7 @@ for ie = 1:length(matfiles)
 
 	% create eventcs structure and output
 	eventcs.CS = CS;
+    eventcs.CSplot=CSplot;
 	eventcs.autocor = event.autocor;
 	eventcs.id = event.id;
 	eventcs.avgphv = avgphv;
