@@ -62,6 +62,5 @@ end
 function err=errfun(para,azi,phV,phvstd)
 	mphv=aziphv(para,azi);
 	errs=(mphv-phV)./phvstd;
-    size(phv)
 	err=nansum(errs.^2);
 end

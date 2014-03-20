@@ -78,9 +78,9 @@ for ie = 1:length(eventfiles)
 		stlos = eventcs.stlos;
 		stnms = eventcs.stnms;
 		if exist('badstnms','var')
-			badstaids = find(ismember(eventcs.stnms,badstnms));
+			list_badstaids = find(ismember(eventcs.stnms,badstnms));
 		else
-			badstaids = [];
+			list_badstaids = [];
 		end
 		amps = zeros(1,length(stlas));
 		for ista = 1:length(eventcs.autocor)
@@ -92,7 +92,7 @@ for ie = 1:length(eventfiles)
 		badstanum = 0; badstaids = [];
 		for ista = 1:length(amps)
 			if stlas(ista) < lalim(1) || stlas(ista) > lalim(2) || ...
-					stlos(ista) < lolim(1) || stlos(ista) > lolim(2) || ismember(ista,badstaids);
+					stlos(ista) < lolim(1) || stlos(ista) > lolim(2) || ismember(ista,list_badstaids);
 				badstanum = badstanum+1;
 				badstaids(badstanum) = ista;
 				continue;
@@ -151,7 +151,7 @@ for ie = 1:length(eventfiles)
 		% fill in informations
 		helmholtz(ip).evla = eventphv(ip).evla;
 		helmholtz(ip).evlo = eventphv(ip).evlo;
-		helmholtz(ip).evdp = eventphv(ip).evdp
+		helmholtz(ip).evdp = eventphv(ip).evdp;
 		helmholtz(ip).raydense = eventphv(ip).raydense;
 		helmholtz(ip).goodnum = eventphv(ip).goodnum;
 		helmholtz(ip).badnum = eventphv(ip).badnum;

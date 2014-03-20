@@ -1,13 +1,11 @@
 % Script to setup parameters used for the whole project
-% updated 11/07/2013
-
 
 % Global settings
-parameters.proj_name = 'ZA';   %'SY';
-parameters.component = 'LHZ';
-parameters.lalim=[6 12];
-parameters.lolim=[-149 -142];
-parameters.gridsize= 1.0;
+parameters.proj_name = 'TA';
+parameters.component = 'LHT';   % determined by filenames
+parameters.lalim=[25 50];
+parameters.lolim=[-125 -65];
+parameters.gridsize=0.3;   % in degrees
 parameters.periods = [20 25 32 40 50 60 80 100];  % in seconds
 
 % parameters for the auto_win_select.m
@@ -21,7 +19,7 @@ parameters.max_dist_tol = deg2km(160);
 %
 parameters.is_rm_resp = 0;
 parameters.minstadist = 5;
-parameters.maxstadist = 400;   % station cross-correlation distance in km
+parameters.maxstadist = 200;   % station cross-correlation distance in km
 parameters.periods = sort(parameters.periods);  % make sure periods are ascending
 parameters.refv = 4;   % to select the correct cycle
 parameters.refphv = ones(size(parameters.periods))*4;
@@ -29,17 +27,17 @@ parameters.min_width = 0.06;  % to build up gaussian filters
 parameters.max_width = 0.10;  
 parameters.wintaperlength = 30;   % taper to build up the isolation filter
 parameters.prefilter = [10,200];
-parameters.xcor_win_halflength = 150; %100 % window for the cross-correlation
+parameters.xcor_win_halflength = 100;  % window for the cross-correlation
 parameters.xcor_win_iter = [0 0 0 1 1 1 1 1]; % re-apply the xcor window due to measured group delay, should be same length as periods
-parameters.Nfit = 2; % fixed
-parameters.Ncircle = 2; %fixed
+parameters.Nfit = 2;
+parameters.Ncircle = 2;
 parameters.cohere_tol = 0.5; % minimum coherenecy between two stations
 parameters.tp_tol = 10;  % seconds away from averaged phase velocity 
 
 % parameters for the tomography
 %
 parameters.raydensetol=deg2km(parameters.gridsize)*2;
-parameters.smweight0 = 1.0;  % smoothing weight for the deltaSx and delta Sy
+parameters.smweight_array = [0.4 0.3 0.2 0.2 0.2 0.2 0.5 1];  % smoothing weight for the deltaSx and delta Sy
 parameters.Tdumpweight = 0;  % dumping the ray to the girgle circle path
 parameters.Rdumpweight = 0;  % dumping the region to have the same phase velocity
 parameters.fiterrtol = 3;   % error allowed in the wavelet fitting
@@ -48,25 +46,22 @@ parameters.dterrtol = 2;    % largest variance of the inversion error allowed
 parameters.inverse_err_tol = 2;  % count be number of standard devition
 parameters.min_amp_tol = 0.4;  % station with amplitude smaller than this ratio of average amplitude will not be used.
 parameters.amp_var_tol = 2; % how much times change of amplitude of single station to the mean value of nearby stations should be considered as bad measurement
-parameters.alpha_range = [1 1 ] %[1 2];  % gingle used [ 0 2 ] # for Helmart tomography
+parameters.alpha_range = [0 2];
 parameters.alpha_search_grid = 0.1;
 
-
-%
 % parameter for stacking 
-parameters.min_csgoodratio=0.1;
+parameters.min_csgoodratio=0.3;  % minimum radio between good and bad measurements for a good event
 parameters.min_phv_tol = 3;
 parameters.max_phv_tol = 5;
 parameters.is_raydense_weight = 0;
-parameters.min_event_num = 3;
+parameters.min_event_num = 10;
 parameters.err_std_tol = 4;
 parameters.issmoothmap = 1;
-parameters.smooth_wavelength = 0.4;
-
+parameters.smooth_wavelength = 0.5;
+parameters.run_smooth_wavelength = 0.5;
 
 % parameters for azimuthal anisotropy inversion
-parameters.smsize = 0;  % averaging nearby grid number
+parameters.smsize = 1;  % averaging nearby grid number
 parameters.off_azi_tol = 30; % differ from great circle path
-parameters.is_one_phi = 0;
-
+parameters.is_one_phi = 1;
 

@@ -66,7 +66,7 @@ CSnum = length(eventcs.CS);
 
 
 
-for iCSnum = 1:CSnum
+for iCSnum = 4:4
     iCSnum
     CS = eventcs.CS(iCSnum);
     CSplot = eventcs.CSplot(iCSnum);

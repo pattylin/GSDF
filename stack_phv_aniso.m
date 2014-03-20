@@ -71,7 +71,6 @@ end
 figure(11)
 clf
 for ip = 1:length(periods)
-
     isophv=zeros(Nx,Ny);
     isophv_std=zeros(Nx,Ny);
     aniso_strength=zeros(Nx,Ny);
@@ -130,6 +129,16 @@ for ip = 1:length(periods)
 				phV(ind) = [];
 			end
 
+            if n <= min_event_num*((2*smsize).^2)
+                isophv(mi,mj)=NaN;
+                isophv_std(mi,mj)=NaN;
+                aniso_strength(mi,mj)=NaN;
+                aniso_strength_std(mi,mj)=NaN;
+                aniso_azi(mi,mj)=NaN;
+                aniso_azi_std(mi,mj)=NaN;
+                continue;
+            end
+
             if is_one_phi
                 [para fiterr]=fit_azi_anisotropy_1phi(azi,phV);
             else
@@ -178,7 +187,6 @@ for ip = 1:length(periods)
            end
 		end  % mj loop
 	end % mi loop
-
 	avgphv_aniso(ip).isophv = isophv;
 	avgphv_aniso(ip).isophv_std = isophv_std;
 	avgphv_aniso(ip).aniso_strength = aniso_strength;
@@ -243,5 +251,4 @@ for ip = 1:length(periods)
 			end
 		end
 	end
-
 end

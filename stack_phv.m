@@ -65,9 +65,10 @@ for ie = 1:length(phvmatfiles)
         eventphv(ip).GV(ind) = NaN;
         ind = find(eventphv(ip).GV > max_phv_tol);
         eventphv(ip).GV(ind) = NaN;
-        %fprintf ( '%f %f\n', eventphv(ip).badnum), eventphv(ip).goodnum./eventphv(ip).badnum 
+        %fprintf ( '%f %f\n', eventphv(ip).badnum,eventphv(ip).goodnum./eventphv(ip).badnum )
 		if eventphv(ip).goodnum./eventphv(ip).badnum < parameters.min_csgoodratio
-			disp('too few good cs');
+			disp(['too few good cs at period', num2str(periods(ip)),'(s)']);
+
 			eventphv(ip).GV(:) = NaN;
         end
         GV_mat(:,:,ie,ip) = eventphv(ip).GV;
@@ -127,11 +128,10 @@ end
 
 if issmoothmap
 for ip=1:length(periods)
-    ip
 	D = smooth_wavelength*nanmean(avgphv(ip).GV(:))*periods(ip);
-    isnan(D) 
+    isnan(D); 
     if isnan(D)
-        GV = 0
+        GV = 0;
     else 
 		GV = smoothmap(xi,yi,avgphv(ip).GV,xnode,ynode,D);
     end

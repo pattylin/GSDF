@@ -36,7 +36,7 @@ lolim=parameters.lolim;
 gridsize=parameters.gridsize;
 periods = parameters.periods;
 raydensetol=parameters.raydensetol;
-smweight0 = parameters.smweight0;
+smweight_array = parameters.smweight_array;
 Tdumpweight0 = parameters.Tdumpweight;
 Rdumpweight0 = parameters.Rdumpweight;
 fiterrtol = parameters.fiterrtol;
@@ -55,7 +55,7 @@ Ny=length(ynode);
 % Setup universal smoothing kernel
 disp('initial the smoothing kernel')
 tic
-        % longtitude smoothing 
+    % longtitude smoothing 
     [i,j] = ndgrid(1:Nx,2:(Ny-1));
     ind = j(:) + Ny*(i(:)-1);
     dy = diff(ynode)*cosd(mean(xnode));  % correct smoothing for latitude
@@ -65,7 +65,7 @@ tic
     Areg = sparse(repmat(ind,1,3),[ind-1,ind,ind+1], ...
                     [-2./(dy1.*(dy1+dy2)), 2./(dy1.*dy2), -2./(dy2.*(dy1+dy2))],Nx*Ny,Nx*Ny);
 
-         % latitude smoothing
+    % latitude smoothing
     [i,j] = ndgrid(2:(Nx-1),1:Ny);
     ind = j(:) + Ny*(i(:)-1);
     dx = diff(xnode);
@@ -155,6 +155,7 @@ for ie = 1:length(csmatfiles)
 	
 	% Loop through the periods
 	for ip = 1:length(periods)
+		smweight0 = smweight_array(ip);
 		dt = zeros(length(eventcs.CS),1);
 		w = zeros(length(eventcs.CS),1);
 		for ics = 1:length(eventcs.CS)
@@ -334,7 +335,7 @@ for ie = 1:length(csmatfiles)
 		eventphv(ip).id = eventcs.id;
 		eventphv(ip).evla = eventcs.evla;
 		eventphv(ip).evlo = eventcs.evlo;
-		eventphv(ip).evdp = eventcs.evdp
+		eventphv(ip).evdp = eventcs.evdp;
 		eventphv(ip).period = periods(ip);
 		eventphv(ip).traveltime = travel_time(ip).tp;
 		eventphv(ip).stlas = eventcs.stlas;
@@ -396,7 +397,7 @@ for ie = 1:length(csmatfiles)
             subplot(M,N,ip)
             ax = worldmap(lalim,lolim);
             set(ax,'Visible','off')
-            surfacem(xi,yi,eventphv(ip).azi_diff)
+            surfacem(xi,yi,eventphv(ip).azi_diff);
             quiverm(xi(sparse_ind),yi(sparse_ind),azix(sparse_ind),aziy(sparse_ind),'k');
             colormap(seiscmap);
             cbar_axis = colorbar();

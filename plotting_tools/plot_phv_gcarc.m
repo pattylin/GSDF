@@ -18,10 +18,10 @@ title({['Periods: ',num2str(periods(iperiod))]; 'phv vs gcarc'})
 
 
 periods(iperiod)
-load pa5phvR
-[temp ipt] = min(abs(2*pi./w - periods(iperiod)));
-plot(get(gca,'xlim'), [phv(ipt) phv(ipt)], '--r','linewidth',1);
-plot(get(gca,'xlim'), [sumphv(iperiod).phv  sumphv(iperiod).phv], '--b','linewidth',1);
+%load pa5phvR
+%[temp ipt] = min(abs(2*pi./w - periods(iperiod)));
+%plot(get(gca,'xlim'), [phv(ipt) phv(ipt)], '--r','linewidth',1);
+%plot(get(gca,'xlim'), [sumphv(iperiod).phv  sumphv(iperiod).phv], '--b','linewidth',1);
 
 
 
@@ -31,10 +31,10 @@ hold on;
 
 title('phv vs baz')
 periods(iperiod)
-load pa5phvR
-[temp ipt] = min(abs(2*pi./w - periods(iperiod)));
-plot(get(gca,'xlim'), [phv(ipt) phv(ipt)], '--r','linewidth',1);
-plot(get(gca,'xlim'), [sumphv(iperiod).phv  sumphv(iperiod).phv], '--b','linewidth',1);
+%load pa5phvR
+%[temp ipt] = min(abs(2*pi./w - periods(iperiod)));
+%plot(get(gca,'xlim'), [phv(ipt) phv(ipt)], '--r','linewidth',1);
+%plot(get(gca,'xlim'), [sumphv(iperiod).phv  sumphv(iperiod).phv], '--b','linewidth',1);
 
 
 
@@ -45,8 +45,8 @@ hold on;
 
 title('phv vs evdp')
 periods(iperiod)
-load pa5phvR
-[temp ipt] = min(abs(2*pi./w - periods(iperiod)));
-plot(get(gca,'xlim'), [phv(ipt) phv(ipt)], '--r','linewidth',1);
-plot(get(gca,'xlim'), [sumphv(iperiod).phv  sumphv(iperiod).phv], '--b','linewidth',1);
+%load pa5phvR
+%[temp ipt] = min(abs(2*pi./w - periods(iperiod)));
+%plot(get(gca,'xlim'), [phv(ipt) phv(ipt)], '--r','linewidth',1);
+%plot(get(gca,'xlim'), [sumphv(iperiod).phv  sumphv(iperiod).phv], '--b','linewidth',1);
 

@@ -194,7 +194,7 @@ for ie = 1:length(matfiles)
 		end
 	end
 	% Get average phase velocity across the array and remove the outliers.
-	clear avgphv
+	clear avgphv avggrv
 	for ip=1:length(periods)
 		clear ddist dtp isgood
 		for ics = 1:length(CS)
@@ -206,7 +206,8 @@ for ie = 1:length(matfiles)
 		goodind = find(isgood > 0);
 		para = polyfit(ddist(goodind),dtp(goodind),1);
 		err = abs(ddist*para(1) + para(2) - dtp);
-		for ics = 1:length(CS)
+
+        for ics = 1:length(CS)
 			if err(ics) > parameters.tp_tol && CS(ics).isgood(ip) > 0
 				CS(ics).isgood(ip) = ErrorCode.high_tp_err;
 			end
@@ -216,7 +217,7 @@ for ie = 1:length(matfiles)
                 if ics == 1
                     disp('Beginning to plot CS figures');
                 end
-                plot_CSfig(event,CS(ics),CSplot(ics))
+                plot_CSfig(event,CS(ics),CSplot(ics));
             end
             % --- end add ------------------------
 

@@ -5,7 +5,7 @@ clear;
 isrecalulatealpha = 0;
 fixalpha = 1;
 demoip = 4;
-isfigure = 1 ;
+isfigure = 1;
 
 phase_v_path = './helmholtz/'
 r = 0.01;
@@ -70,13 +70,13 @@ for ie = 1:length(phvmatfiles)
 	disp(helmholtz(1).id);
 	for ip=1:length(periods)
         ind = find(helmholtz(ip).GV_cor < min_phv_tol);
-        helmholtz(ip).GV_cor(ind) = min_phv_tol;
+        helmholtz(ip).GV_cor(ind) = NaN; %min_phv_tol;
         ind = find(helmholtz(ip).GV_cor > max_phv_tol);
-        helmholtz(ip).GV_cor(ind) = max_phv_tol;
+        helmholtz(ip).GV_cor(ind) = NaN; %max_phv_tol;
         ind = find(helmholtz(ip).GV < min_phv_tol);
-        helmholtz(ip).GV(ind) = min_phv_tol;
+        helmholtz(ip).GV(ind) = NaN; %min_phv_tol;
         ind = find(helmholtz(ip).GV > max_phv_tol);
-        helmholtz(ip).GV(ind) = max_phv_tol;
+        helmholtz(ip).GV(ind) = NaN; %max_phv_tol;
 		if helmholtz(ip).goodnum./helmholtz(ip).badnum < min_csgoodratio
 			disp('not enough good cs measurement');
 			helmholtz(ip).GV_cor(:) = NaN;
@@ -246,7 +246,7 @@ for ip = 1:length(periods)
 	h1=surfacem(xi,yi,avgphv(ip).GV);
 	% set(h1,'facecolor','interp');
 	title(['Periods: ',num2str(periods(ip))],'fontsize',15)
-	avgv = nanmean(avgphv(ip).GV(:))
+	avgv = nanmean(avgphv(ip).GV(:));
 	if isnan(avgv)
 		continue;
 	end
@@ -287,7 +287,7 @@ for ip = 1:length(periods)
 	h1=surfacem(xi,yi,avgphv(ip).GV_cor);
 	% set(h1,'facecolor','interp');
 	title(['Periods: ',num2str(periods(ip))],'fontsize',15)
-	avgv = nanmean(avgphv(ip).GV(:))
+	avgv = nanmean(avgphv(ip).GV(:));
 	if isnan(avgv)
 		continue;
 	end
